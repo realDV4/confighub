@@ -1,8 +1,8 @@
 <?php
 header("Content-Type: text/text");
 $key = "JFuthutgh287tg3287th2387th3276t";
-$uploadhost = "http://confighub.eu/i/";
-$redirect = "http://confighub.eu";
+$uploadhost = "https://github.com/realDV4/confighub/blob/gh-pages/i/";
+$redirect = "https://github.com/realDV4/confighub/blob/gh-pages";
 if ($_SERVER["REQUEST_URI"] == "/robot.txt") { die("User-agent: *\nDisallow: /"); }
 if (isset($_POST['k'])) {
     if ($_POST['k'] == $key) {
