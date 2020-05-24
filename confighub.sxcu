@@ -1,0 +1,12 @@
+﻿{
+  "Version": "13.1.0",
+  "Name": "confighub",
+  "DestinationType": "ImageUploader",
+  "RequestMethod": "POST",
+  "RequestURL": "http://confighub.eu/i/upload.php",
+  "Body": "MultipartFormData",
+  "Arguments": {
+    "k": "JFuthutgh287tg3287th2387th3276t"
+  },
+  "FileFormName": "d"
+}
