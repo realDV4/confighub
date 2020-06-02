@@ -390,7 +390,7 @@ Teams toggle true
 Criticals toggle false
 BugUp toggle true
 BowAimbot toggle true
-Regen toggle true
+Regen toggle false
 FastUse toggle true
 InventoryMove toggle true
 InventoryCleaner toggle true
@@ -412,8 +412,7 @@ unchat &r
 unchat &r
 unchat &r
 unchat &f-------[&eChangelog&f]-------
-unchat &bImproved Tower,Scaffold
-unchat &bAttempt to fix NoSlow Flags with Killaura.
+unchat &bRemoved Regen
 unchat &f------------------------------
 unchat &3Status:&a Bypassing (Still)
 unchat &bYou can use Zoot,SuperKnockback if wanted but it might kick.
