@@ -47,7 +47,7 @@ AntiBot LivingTime true
 AntiBot LivingTimeTicks 200
 AntiBot Ground true
 AntiBot Air false
-AntiBot InvaildGround false
+AntiBot InvalidGround true
 AntiBot Swing false
 AntiBot Health false
 AntiBot Derp false
@@ -57,8 +57,8 @@ AntiBot Ping false
 AntiBot NeedHit false
 AntiBot DuplicateInWorld true
 AntiBot DuplicateInTab true
-AntiBot toggle true
-AntiCactus toggle true
+AntiBot toggle false
+AntiCactus toggle false
 AntiHunger toggle false
 AtAllProvider MaxDelay 1000
 AtAllProvider MinDelay 500
@@ -98,6 +98,7 @@ AutoSoup Health 15.0
 AutoSoup Delay 0
 AutoSoup OpenInv true
 AutoSoup SimulateInventory true
+AutoSoup Bowl Drop
 AutoSoup toggle false
 AutoTool toggle false
 AutoWalk toggle false
@@ -105,7 +106,7 @@ AutoWeapon SpoofItem false
 AutoWeapon SpoofTicks 10
 AutoWeapon toggle false
 BedGodMode toggle false
-BetterCriticals Mode Packet
+BetterCriticals Mode AAC4Packet
 BetterCriticals PacketAirCrits false
 BetterCriticals PacketLessPackets false
 BetterCriticals NoGroundPhase false
@@ -187,18 +188,18 @@ CivBreak Air-Reset false
 CivBreak Range-Reset false
 CivBreak toggle false
 Clip Mode Teleport
-Clip Horizontal 0.0
-Clip Vertical -3.09
+Clip Horizontal 0.55
+Clip Vertical 0.55
 Clip toggle false
 ComponentOnHover toggle false
 ConsoleSpammer Mode Payload
 ConsoleSpammer Delay 0
 ConsoleSpammer toggle false
-Criticals Mode Jump
-Criticals Delay 310
+Criticals Mode NcpPacket
+Criticals Delay 347
 Criticals HurtTime 10
 Criticals toggle false
-Damage Mode AAC
+Damage Mode NCP
 Damage Damage 6
 Damage toggle false
 Derp Headless false
@@ -231,8 +232,8 @@ Fly AAC3.0.5-Fast true
 Fly AAC3.3.12-Motion 3.4
 Fly AAC3.3.13-Motion 5.43
 Fly Hypixel-Boost false
-Fly Hypixel-BoostDelay 568
-Fly Hypixel-BoostTimer 1.16
+Fly Hypixel-BoostDelay 340
+Fly Hypixel-BoostTimer 1.03
 Fly MineplexSpeed 5.05
 Fly NeruxVace-Ticks 8
 Fly Mark false
@@ -270,6 +271,7 @@ InventoryCleaner MinDelay 166
 InventoryCleaner InvOpen false
 InventoryCleaner SimulateInventory true
 InventoryCleaner NoMove false
+InventoryCleaner IgnoreVehicles false
 InventoryCleaner Hotbar true
 InventoryCleaner RandomSlot true
 InventoryCleaner Sort true
@@ -297,35 +299,35 @@ KeepAlive toggle false
 KeepContainer toggle false
 Kick Mode Quit
 Kick toggle false
-KillAura MaxCPS 13
-KillAura MinCPS 8
-KillAura HurtTime 7
-KillAura Range 4.53
+KillAura MaxCPS 18
+KillAura MinCPS 9
+KillAura HurtTime 8
+KillAura Range 4.88
 KillAura ThroughWallsRange 2.16
-KillAura RangeSprintReducement 0.4
+KillAura RangeSprintReducement 0.0
 KillAura Priority Health
 KillAura TargetMode Switch
 KillAura Swing true
 KillAura KeepSprint true
 KillAura AutoBlock true
-KillAura InteractAutoBlock false
+KillAura InteractAutoBlock true
 KillAura DelayedBlock true
-KillAura BlockRate 51
+KillAura BlockRate 36
 KillAura RayCast true
 KillAura RayCastIgnored false
 KillAura LivingRayCast true
 KillAura AAC true
-KillAura MaxTurnSpeed 37.57
-KillAura MinTurnSpeed 15.0
+KillAura MaxTurnSpeed 20.89
+KillAura MinTurnSpeed 14.46
 KillAura SilentRotation true
-KillAura RotationStrafe false
-KillAura RandomCenter true
+KillAura Strafe Off
+KillAura RandomCenter false
 KillAura Outborder true
 KillAura FOV 180.0
 KillAura Predict true
-KillAura MaxPredictSize 1.94
-KillAura MinPredictSize 0.82
-KillAura FailRate 10.96
+KillAura MaxPredictSize 0.89
+KillAura MinPredictSize 0.41
+KillAura FailRate 4.57
 KillAura FakeSwing true
 KillAura NoInvAttack false
 KillAura NoInvDelay 0
@@ -352,7 +354,7 @@ MidClick toggle false
 MoreCarry toggle false
 MultiActions toggle false
 NoClip toggle false
-NoFall Mode NoGround
+NoFall Mode LAAC
 NoFall toggle false
 NoFriends toggle false
 NoJumpDelay toggle false
@@ -378,6 +380,12 @@ NoWeb Mode AAC
 NoWeb toggle false
 Nuker Radius 5.2
 Nuker ThroughWalls false
+Nuker Priority Distance
+Nuker Rotations true
+Nuker Layer false
+Nuker HitDelay 4
+Nuker Nuke 1
+Nuker NukeDelay 1
 Nuker toggle false
 Paralyze toggle false
 Parkour toggle false
@@ -407,6 +415,7 @@ Regen Health 20
 Regen Food 18
 Regen Speed 1
 Regen NoAir false
+Regen PotionEffect true
 Regen toggle false
 ResourcePackSpoof toggle false
 ReverseStep Motion 1.0
@@ -416,33 +425,34 @@ SafeWalk toggle false
 Scaffold Mode Expand
 Scaffold MaxDelay 0
 Scaffold MinDelay 0
-Scaffold PlaceableDelay false
+Scaffold PlaceableDelay true
 Scaffold AutoBlock true
 Scaffold StayAutoBlock true
-Scaffold Sprint true
-Scaffold Swing true
+Scaffold Sprint false
+Scaffold Swing false
 Scaffold Search true
+Scaffold Down true
 Scaffold PlaceTiming Pre
 Scaffold Eagle false
 Scaffold EagleSilent false
 Scaffold BlocksToEagle 8
 Scaffold ExpandLength 2
 Scaffold Rotations true
-Scaffold KeepRotationLength 2
-Scaffold KeepRotation false
+Scaffold KeepRotationLength 0
+Scaffold KeepRotation true
 Scaffold Zitter false
 Scaffold ZitterMode Teleport
 Scaffold ZitterSpeed 0.13
 Scaffold ZitterStrength 0.05
 Scaffold Timer 1.03
-Scaffold SpeedModifier 0.47
+Scaffold SpeedModifier 0.95
 Scaffold SameY false
 Scaffold SafeWalk true
 Scaffold AirSafe true
 Scaffold Counter true
 Scaffold Mark false
 Scaffold toggle false
-ServerCrasher Mode BookFlood
+ServerCrasher Mode MassiveChunkLoading
 ServerCrasher toggle false
 SkinDerp Delay 0
 SkinDerp Hat true
@@ -458,13 +468,13 @@ SlimeJump toggle false
 Sneak Mode Legit
 Sneak StopMove false
 Sneak toggle false
-Speed Mode NCPHop
-Speed CustomSpeed 0.48
-Speed CustomY 0.4
-Speed CustomTimer 1.12
+Speed Mode NCPFHop
+Speed CustomSpeed 0.3
+Speed CustomY 0.34
+Speed CustomTimer 1.01
 Speed CustomStrafe false
 Speed CustomResetXZ true
-Speed CustomResetY false
+Speed CustomResetY true
 Speed AAC-PortLength 2.99
 Speed AACGround-Timer 2.42
 Speed CubeCraft-PortLength 1.0
@@ -479,7 +489,7 @@ Sprint toggle true
 Step Mode NCP
 Step Height 1.0
 Step JumpHeight 0.42
-Step Delay 142
+Step Delay 301
 Step toggle true
 Strafe toggle false
 SuperKnock Mode Packet
@@ -520,38 +530,11 @@ TPHit FontNumber 0
 TPHit Selected font Roboto Medium
 TPHit toggle false
 TPScriptInfo toggle false
-TargetInfo §7§lGeneral Settings 
-TargetInfo X 430
-TargetInfo Y 310
-TargetInfo Scale 1.0
-TargetInfo ShowTargetOnView false
-TargetInfo  false
-TargetInfo §7§lBackground Settings 
-TargetInfo BGRed 0
-TargetInfo BGGreen 0
-TargetInfo BGBlue 0
-TargetInfo BGAlpha 150
-TargetInfo  false
-TargetInfo §7§lText Settings 
-TargetInfo TextRed 255
-TargetInfo TextGreen 255
-TargetInfo TextBlue 255
-TargetInfo TextY 0.0
-TargetInfo ShadowText true
-TargetInfo  false
-TargetInfo §7§lBorder Settings 
-TargetInfo Border true
-TargetInfo BorderRed 255
-TargetInfo BorderGreen 255
-TargetInfo BorderBlue 255
-TargetInfo BorderAlpha 255
-TargetInfo BorderStrength 2.0
-TargetInfo  0
-TargetInfo Font  Roboto Medium
-TargetInfo toggle false
 Teams ScoreboardTeam false
 Teams Color true
+Teams GommeSW false
 Teams toggle true
+Teleport IgnoreNoCollision false
 Teleport Mode Blink
 Teleport Button Right
 Teleport toggle false
@@ -601,6 +584,7 @@ Zoot BadEffects false
 Zoot Fire true
 Zoot NoAir true
 Zoot toggle false
+
 unchat &r
 unchat &r
 unchat &r
@@ -613,8 +597,9 @@ unchat &r
 unchat &r
 unchat &r
 unchat &f-------[&eChangelog&f]-------
-unchat &bReleased this config i guess
+unchat &bImproved Scaffold,Killaura,Speed
+unchat &bYou can use Nofall to get faster of the box
 unchat &f------------------------------
 unchat &3Status:&a Bypassing
 unchat &bConfig by Confighub.eu
-unchat &bThis config is not fully done yet, please report any problem on our discord.
+unchat &bThis config is not fully done yet, please report any problem to me (DV4) or on our discord.
