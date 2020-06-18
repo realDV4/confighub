@@ -415,8 +415,7 @@ unchat &r
 unchat &f-------[&eChangelog&f]-------
 unchat &bRemoved Regen because jartex fixed it.
 unchat &f------------------------------
-unchat &3Status:&a Bypassing
-unchat &bYou can use SuperKnockback if wanted but it might kick.
-unchat &bDo not spam Instant use.
+unchat &3Status:&cAutobanning
+unchat &4This config autobans 100%. Do not use it.
 unchat &bConfig by Confighub.eu
 unchat &5You are using the beta config. This might kick/autoban.
