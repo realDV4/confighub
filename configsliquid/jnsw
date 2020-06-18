@@ -414,8 +414,6 @@ unchat &r
 unchat &f-------[&eChangelog&f]-------
 unchat &bRemoved Regen
 unchat &f------------------------------
-unchat &3Status:&a Bypassing (Still)
-unchat &bYou can use Zoot,SuperKnockback if wanted but it might kick.
-unchat &bDo not spam Instant use.
+unchat &3Status:&cAutobanning
+unchat &4Dont use this config. It will autoban you.
 unchat &bConfig by Confighub.eu
-unchat &5new beta config comming soon
