@@ -59,7 +59,7 @@ AntiBot DuplicateInWorld true
 AntiBot DuplicateInTab true
 AntiBot toggle false
 AntiCactus toggle false
-AntiHunger toggle true
+AntiHunger toggle false
 AtAllProvider MaxDelay 2142
 AtAllProvider MinDelay 1785
 AtAllProvider Retry true
@@ -407,7 +407,7 @@ Regen Food 18
 Regen Speed 8
 Regen NoAir false
 Regen PotionEffect false
-Regen toggle true
+Regen toggle false
 ResourcePackSpoof toggle false
 ReverseStep Motion 1.0
 ReverseStep toggle false
