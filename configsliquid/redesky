@@ -1,32 +1,3 @@
-AACClickTP Block 26
-AACClickTP InstantBlockFucker true
-AACClickTP FuckerRotate false
-AACClickTP Swing true
-AACClickTP Mode AAC3New
-AACClickTP DelayMode Instant
-AACClickTP CustomDelay 500.0
-AACClickTP WaitTicks 5
-AACClickTP StayAtTarget true
-AACClickTP MaxStayTicks 25
-AACClickTP UseNoXZMoveTimer true
-AACClickTP NoXZMoveTimer 0.59
-AACClickTP Button Middle
-AACClickTP TargetESP false
-AACClickTP R 10
-AACClickTP G 10
-AACClickTP B 10
-AACClickTP toggle false
-AACPhase toggle false
-AACStep toggle false
-AACTP FlySpeed 3.0
-AACTP Block 26
-AACTP InstantBlockFucker true
-AACTP FuckerRotate false
-AACTP Swing true
-AACTP Mode AAC
-AACTP DisableOnDmg true
-AACTP AroundWalls false
-AACTP toggle false
 AbortBreaking toggle false
 Aimbot Range 100.0
 Aimbot TurnSpeed 2.0
@@ -39,35 +10,16 @@ Aimbot toggle false
 AirJump toggle false
 AirLadder toggle false
 AntiAFK toggle false
-AntiBot Tab true
-AntiBot TabMode Contains
-AntiBot EntityID true
-AntiBot Color true
-AntiBot LivingTime true
-AntiBot LivingTimeTicks 200
-AntiBot Ground true
-AntiBot Air false
-AntiBot InvalidGround true
-AntiBot Swing false
-AntiBot Health false
-AntiBot Derp false
-AntiBot WasInvisible false
-AntiBot Armor false
-AntiBot Ping false
-AntiBot NeedHit false
-AntiBot DuplicateInWorld true
-AntiBot DuplicateInTab true
-AntiBot toggle false
-AntiCactus toggle false
+AntiCactus toggle true
 AntiHunger toggle false
 AtAllProvider MaxDelay 1000
 AtAllProvider MinDelay 500
 AtAllProvider Retry false
 AtAllProvider toggle false
-AutoArmor MaxDelay 114
-AutoArmor MinDelay 31
+AutoArmor MaxDelay 10
+AutoArmor MinDelay 10
 AutoArmor InvOpen false
-AutoArmor SimulateInventory true
+AutoArmor SimulateInventory false
 AutoArmor NoMove false
 AutoArmor ItemDelay 0
 AutoArmor Hotbar true
@@ -87,7 +39,7 @@ AutoLeave Mode Quit
 AutoLeave toggle false
 AutoPot Health 16.91
 AutoPot Delay 200
-AutoPot OpenInv false
+AutoPot OpenInv true
 AutoPot SimulateInventory true
 AutoPot GroundDistance 2.0
 AutoPot Mode Normal
@@ -102,8 +54,8 @@ AutoSoup Bowl Drop
 AutoSoup toggle false
 AutoTool toggle false
 AutoWalk toggle false
-AutoWeapon SpoofItem false
-AutoWeapon SpoofTicks 10
+AutoWeapon SpoofItem true
+AutoWeapon SpoofTicks 20
 AutoWeapon toggle false
 BedGodMode toggle false
 Blink Pulse true
@@ -115,7 +67,7 @@ BlockWalk toggle false
 BowAimbot Silent true
 BowAimbot Predict true
 BowAimbot ThroughWalls false
-BowAimbot PredictSize 2.0
+BowAimbot PredictSize 5.0
 BowAimbot Priority Direction
 BowAimbot Mark true
 BowAimbot toggle true
@@ -142,11 +94,11 @@ BufferSpeed Slime true
 BufferSpeed AirStrafe false
 BufferSpeed NoHurt true
 BufferSpeed toggle false
-BugUp Mode TeleportBack
-BugUp MaxFallDistance 255
-BugUp MaxDistanceToSetback 2.5
+BugUp Mode FlyFlag
+BugUp MaxFallDistance 93
+BugUp MaxDistanceToSetback 0.0
 BugUp Indicator true
-BugUp toggle true
+BugUp toggle false
 ChestAura Range 4.77
 ChestAura Delay 200
 ChestAura ThroughWalls true
@@ -154,8 +106,8 @@ ChestAura VisualSwing false
 ChestAura Chest 54
 ChestAura Rotations false
 ChestAura toggle false
-ChestStealer MaxDelay 136
-ChestStealer MinDelay 70
+ChestStealer MaxDelay 0
+ChestStealer MinDelay 0
 ChestStealer TakeRandomized true
 ChestStealer OnlyItems false
 ChestStealer NoCompass false
@@ -173,16 +125,15 @@ CivBreak Range-Reset false
 CivBreak toggle false
 Clip Mode Teleport
 Clip Horizontal 0.0
-Clip Vertical -4.55
+Clip Vertical -6.0
 Clip toggle false
 ComponentOnHover toggle false
 ConsoleSpammer Mode Payload
 ConsoleSpammer Delay 0
 ConsoleSpammer toggle false
-Criticals Mode NcpPacket
-Criticals Delay 347
+Criticals Mode Jump
+Criticals Delay 0
 Criticals HurtTime 10
-Criticals toggle false
 Damage Mode NCP
 Damage Damage 6
 Damage toggle false
@@ -191,7 +142,7 @@ Derp Spinny false
 Derp Increment 1.0
 Derp toggle false
 Eagle toggle false
-FastBow Packets 3
+FastBow Packets 20
 FastBow toggle false
 FastBreak BreakDamage 0.42
 FastBreak toggle false
@@ -203,10 +154,10 @@ FastPlace toggle false
 FastStairs Mode NCP
 FastStairs LongJump false
 FastStairs toggle false
-FastUse Mode NCP
+FastUse Mode Instant
 FastUse Delay 0
 FastUse toggle true
-Fly Mode Hypixel
+Fly Mode AAC3.0.5
 Fly VanillaSpeed 5.0
 Fly VanillaKickBypass true
 Fly NCPMotion 0.16
@@ -231,7 +182,7 @@ Fucker Instant false
 Fucker SwitchDelay 0
 Fucker Swing true
 Fucker Rotations true
-Fucker Surroundings false
+Fucker Surroundings true
 Fucker NoHit true
 Fucker toggle false
 Ghost toggle false
@@ -249,8 +200,8 @@ IceSpeed toggle false
 Ignite Lighter true
 Ignite Lava true
 Ignite toggle false
-InventoryCleaner MaxDelay 158
-InventoryCleaner MinDelay 142
+InventoryCleaner MaxDelay 0
+InventoryCleaner MinDelay 0
 InventoryCleaner InvOpen false
 InventoryCleaner SimulateInventory false
 InventoryCleaner NoMove false
@@ -258,8 +209,17 @@ InventoryCleaner IgnoreVehicles false
 InventoryCleaner Hotbar true
 InventoryCleaner RandomSlot true
 InventoryCleaner Sort true
-InventoryCleaner ItemDelay 151
-InventoryCleaner toggle true
+InventoryCleaner ItemDelay 0
+InventoryCleaner SortSlot-1 Sword
+InventoryCleaner SortSlot-2 Gapple
+InventoryCleaner SortSlot-3 Pickaxe
+InventoryCleaner SortSlot-4 Axe
+InventoryCleaner SortSlot-5 Pearl
+InventoryCleaner SortSlot-6 Food
+InventoryCleaner SortSlot-7 None
+InventoryCleaner SortSlot-8 Block
+InventoryCleaner SortSlot-9 Block
+InventoryCleaner toggle false
 InventoryMove NoDetectable false
 InventoryMove AACAdditionPro true
 InventoryMove NoMoveClicks false
@@ -273,35 +233,35 @@ KeepAlive toggle false
 KeepContainer toggle false
 Kick Mode Quit
 Kick toggle false
-KillAura MaxCPS 14
-KillAura MinCPS 9
+KillAura MaxCPS 17
+KillAura MinCPS 10
 KillAura HurtTime 7
-KillAura Range 4.5
-KillAura ThroughWallsRange 3.0
+KillAura Range 4.94
+KillAura ThroughWallsRange 0.0
 KillAura RangeSprintReducement 0.0
-KillAura Priority Health
-KillAura TargetMode Single
+KillAura Priority Direction
+KillAura TargetMode Switch
 KillAura Swing true
 KillAura KeepSprint true
-KillAura AutoBlock true
-KillAura InteractAutoBlock true
+KillAura AutoBlock false
+KillAura InteractAutoBlock false
 KillAura DelayedBlock false
-KillAura BlockRate 75
+KillAura BlockRate 40
 KillAura RayCast true
-KillAura RayCastIgnored false
+KillAura RayCastIgnored true
 KillAura LivingRayCast true
 KillAura AAC true
-KillAura MaxTurnSpeed 43.39
-KillAura MinTurnSpeed 43.39
+KillAura MaxTurnSpeed 30.0
+KillAura MinTurnSpeed 20.0
 KillAura SilentRotation true
-KillAura Strafe Off
+KillAura Strafe Silent
 KillAura RandomCenter false
 KillAura Outborder false
 KillAura FOV 180.0
 KillAura Predict true
-KillAura MaxPredictSize 0.67
-KillAura MinPredictSize 0.67
-KillAura FailRate 2.68
+KillAura MaxPredictSize 1.5
+KillAura MinPredictSize 1.0
+KillAura FailRate 3.0
 KillAura FakeSwing true
 KillAura NoInvAttack false
 KillAura NoInvDelay 0
@@ -317,7 +277,7 @@ LiquidWalk NoJump false
 LiquidWalk AACFlyMotion 0.5
 LiquidWalk toggle false
 Liquids toggle false
-LongJump Mode NCP
+LongJump Mode AACv1
 LongJump NCPBoost 3.33
 LongJump AutoJump true
 LongJump toggle false
@@ -333,15 +293,15 @@ NoPitchLimit ServerSide true
 NoPitchLimit toggle false
 NoRotateSet Confirm true
 NoRotateSet ConfirmIllegalRotation false
-NoRotateSet NoZero false
+NoRotateSet NoZero true
 NoRotateSet toggle true
-NoSlow BlockForwardMultiplier 1.0
-NoSlow BlockStrafeMultiplier 1.0
-NoSlow ConsumeForwardMultiplier 1.0
-NoSlow ConsumeStrafeMultiplier 1.0
+NoSlow BlockForwardMultiplier 0.45
+NoSlow BlockStrafeMultiplier 0.45
+NoSlow ConsumeForwardMultiplier 0.0
+NoSlow ConsumeStrafeMultiplier 0.0
 NoSlow BowForwardMultiplier 0.45
 NoSlow BowStrafeMultiplier 0.45
-NoSlow Packet true
+NoSlow Packet false
 NoSlow Soulsand false
 NoSlow toggle true
 NoSlowBreak Air true
@@ -363,9 +323,9 @@ Parkour toggle false
 PerfectHorseJump toggle false
 Phase Mode AAC3.5.0
 Phase toggle false
-PingSpoof MaxDelay 625
-PingSpoof MinDelay 267
-PingSpoof toggle false
+PingSpoof MaxDelay 392
+PingSpoof MinDelay 294
+PingSpoof toggle true
 Plugins toggle false
 PortalMenu toggle true
 PotionSaver toggle false
@@ -386,7 +346,7 @@ Regen Health 20
 Regen Food 18
 Regen Speed 1
 Regen NoAir false
-Regen PotionEffect true
+Regen PotionEffect false
 Regen toggle false
 ResourcePackSpoof toggle false
 ReverseStep Motion 1.0
@@ -398,15 +358,15 @@ Scaffold MaxDelay 0
 Scaffold MinDelay 0
 Scaffold PlaceableDelay false
 Scaffold AutoBlock true
-Scaffold StayAutoBlock false
-Scaffold Sprint true
+Scaffold StayAutoBlock true
+Scaffold Sprint false
 Scaffold Swing true
 Scaffold Search true
-Scaffold Down true
+Scaffold Down false
 Scaffold PlaceTiming Pre
-Scaffold Eagle false
+Scaffold Eagle true
 Scaffold EagleSilent false
-Scaffold BlocksToEagle 8
+Scaffold BlocksToEagle 0
 Scaffold ExpandLength 3
 Scaffold Rotations true
 Scaffold KeepRotationLength 0
@@ -415,15 +375,15 @@ Scaffold Zitter false
 Scaffold ZitterMode Teleport
 Scaffold ZitterSpeed 0.13
 Scaffold ZitterStrength 0.05
-Scaffold Timer 1.0
-Scaffold SpeedModifier 1.2
+Scaffold Timer 0.65
+Scaffold SpeedModifier 0.0
 Scaffold SameY false
 Scaffold SafeWalk true
 Scaffold AirSafe true
 Scaffold Counter true
 Scaffold Mark false
 Scaffold toggle false
-ServerCrasher Mode MassiveChunkLoading
+ServerCrasher Mode Book
 ServerCrasher toggle false
 SkinDerp Delay 0
 SkinDerp Hat true
@@ -439,10 +399,10 @@ SlimeJump toggle false
 Sneak Mode Legit
 Sneak StopMove false
 Sneak toggle false
-Speed Mode SNCPBHop
-Speed CustomSpeed 0.49
-Speed CustomY 0.41
-Speed CustomTimer 1.04
+Speed Mode Custom
+Speed CustomSpeed 0.39
+Speed CustomY 0.4
+Speed CustomTimer 1.0
 Speed CustomStrafe false
 Speed CustomResetXZ true
 Speed CustomResetY true
@@ -452,12 +412,12 @@ Speed CubeCraft-PortLength 1.0
 Speed MineplexGround-Speed 0.1
 Speed toggle false
 Sprint AllDirections false
-Sprint Blindness false
+Sprint Blindness true
 Sprint Food true
-Sprint CheckServerSide false
+Sprint CheckServerSide true
 Sprint CheckServerSideOnlyGround false
 Sprint toggle true
-Step Mode Rewinside
+Step Mode Jump
 Step Height 1.0
 Step JumpHeight 0.42
 Step Delay 301
@@ -469,23 +429,6 @@ TNTBlock Fuse 3
 TNTBlock Range 9.0
 TNTBlock AutoSword true
 TNTBlock toggle false
-TPHit Mode AAC3New
-TPHit DelayMode Instant
-TPHit CustomDelay 500.0
-TPHit WaitTicks 6
-TPHit UseNoXZMoveTimer true
-TPHit NoXZMoveTimer 0.72
-TPHit AntiKick true
-TPHit ShowTargetHUD false
-TPHit X 405
-TPHit Y 330
-TPHit Scale 1.0
-TPHit BGAlpha 150
-TPHit ShadowText true
-TPHit FontNumber 0
-TPHit Selected font Roboto Medium
-TPHit toggle false
-TPScriptInfo toggle false
 Teams ScoreboardTeam false
 Teams Color true
 Teams GommeSW false
@@ -498,7 +441,7 @@ TeleportHit toggle false
 Timer Speed 1.28
 Timer OnMove true
 Timer toggle false
-Tower Mode ConstantMotion
+Tower Mode Jump
 Tower AutoBlock true
 Tower StayAutoBlock true
 Tower Swing true
@@ -522,11 +465,11 @@ Trigger MaxCPS 12
 Trigger MinCPS 8
 Trigger toggle false
 VehicleOneHit toggle false
-Velocity Horizontal 0.0
-Velocity Vertical 0.0
+Velocity Horizontal 0.44
+Velocity Vertical 0.91
 Velocity Mode Simple
 Velocity ReverseStrength 1.0
-Velocity SmoothReverseStrength 0.05
+Velocity SmoothReverseStrength 0.02
 Velocity AACPushXZReducer 2.0
 Velocity AACPushYReducer true
 Velocity toggle true
@@ -542,6 +485,7 @@ Zoot NoAir true
 Zoot toggle false
 
 
+
 unchat &r
 unchat &r
 unchat &r
@@ -554,8 +498,9 @@ unchat &r
 unchat &r
 unchat &r
 unchat &f-------[&eChangelog&f]-------
-unchat &bHUGE Improvement of Killaura,Scaffold
+unchat &bUpdate to AAC V4
 unchat &f------------------------------
-unchat &3Status:&a Bypassing
-unchat &3You can also use NCPHop as Speed.
+unchat &3Status:&a Bypassing (But Beta)
+unchat &3Theres no Speed and (Good,flagfree) Scaffold
+unchat &3Longjump Bypasses but not too long
 unchat &bThis config is not fully done yet, please report any problem to me (DV4#8261).
