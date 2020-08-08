@@ -29,6 +29,7 @@ pause
 bitsadmin /transfer Forge /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/forge-1.12.2-14.23.5.2854-installer.jar %localappdata%\temp\Forge.jar
 cd %temp%
 Forge.jar
+cls
 goto 2
 :optifine
 md %appdata%\.minecraft\mods\1.12.2
