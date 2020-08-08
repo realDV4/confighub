@@ -26,6 +26,8 @@ del %temp%\dv4isgamer.bat /f
 pause
 :forge
 bitsadmin /transfer Forge /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/forge-1.12.2-14.23.5.2854-installer.jar %localappdata%\temp\Forge.jar
+cd %temp%
+Forge.jar
 goto 2
 :optifine
 bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/OptiFine_1.12.2_HD_U_F5.jar %appdata%\.minecraft\mods\1.12.2\Optifine.jar
