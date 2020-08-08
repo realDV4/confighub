@@ -1,54 +1,4 @@
 @echo off
-md %appdata%\.minecraft\mods\1.12.2
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-
 echo Install Forge 1.12.2? (This is required to run the mods, if you already have it installed press 2)
 SET /P M=Type 1 for yes or 2 for no then press enter:
 IF %M%==1 GOTO forge
@@ -59,6 +9,7 @@ SET /P M=Type 1 for yes or 2 for no then press enter:
 IF %M%==1 GOTO optifine
 IF %M%==2 GOTO mods
 :mods
+md %appdata%\.minecraft\mods\1.12.2
 bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/adminshop-1.5.1.jar %appdata%\.minecraft\mods\1.12.2\adminshop-1.5.1.jar
 bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/JurassiCraft-1.12.2-2.1.23.jar %appdata%\.minecraft\mods\1.12.2\JurassiCraft-1.12.2-2.1.23.jar
 bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/[1.12.2]+SecurityCraft+v1.8.19.3.jar %appdata%\.minecraft\mods\1.12.2\[1.12.2]+SecurityCraft+v1.8.19.3.jar
@@ -79,5 +30,6 @@ cd %temp%
 Forge.jar
 goto 2
 :optifine
+md %appdata%\.minecraft\mods\1.12.2
 bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/OptiFine_1.12.2_HD_U_F5.jar %appdata%\.minecraft\mods\1.12.2\Optifine.jar
 goto mods
