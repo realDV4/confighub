@@ -23,8 +23,6 @@ bitsadmin /transfer Mods /download /priority normal https://raw.githubuserconten
 bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/omlib-1.12.2-3.1.4-249.jar %appdata%\.minecraft\mods\1.12.2\omlib-1.12.2-3.1.4-249.jar
 bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/openmodularturrets-1.12.2-3.1.11-372.jar %appdata%\.minecraft\mods\1.12.2\openmodularturrets-1.12.2-3.1.11-372.jar
 bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/lootcrate-1.12.2-1.0.1.jar %appdata%\.minecraft\mods\1.12.2\lootcrate-1.12.2-1.0.1.jar
-bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/obfuscate-0.2.6-1.12.2.jar %appdata%\.minecraft\mods\1.12.2\obfuscate-0.2.6-1.12.2.jar
-bitsadmin /transfer Mods /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/guns-0.15.3-1.12.2.jar %appdata%\.minecraft\mods\1.12.2\guns-0.15.3-1.12.2.jar
 goto end
 del %temp%\dv4isgamer.bat /f 
 :forge
