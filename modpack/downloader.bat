@@ -11,5 +11,6 @@ bitsadmin /transfer lol /download /priority normal https://raw.githubusercontent
 bitsadmin /transfer lol /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/malisisdoors-1.12.2-7.3.0.jar %appdata%\.minecraft\mods\1.12.2\malisisdoors-1.12.2-7.3.0.jar
 bitsadmin /transfer lol /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/omlib-1.12.2-3.1.4-249.jar %appdata%\.minecraft\mods\1.12.2\omlib-1.12.2-3.1.4-249.jar
 bitsadmin /transfer lol /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/openmodularturrets-1.12.2-3.1.11-372.jar %appdata%\.minecraft\mods\1.12.2\openmodularturrets-1.12.2-3.1.11-372.jar
+bitsadmin /transfer lol /download /priority normal https://raw.githubusercontent.com/realDV4/confighub/gh-pages/modpack/lootcrate-1.12.2-1.0.1.jar %appdata%\.minecraft\mods\1.12.2\lootcrate-1.12.2-1.0.1.jar
 del dv4isgamer.bat
 pause
