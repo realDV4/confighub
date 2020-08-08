@@ -1,5 +1,5 @@
-cls
 @echo off
+cls
 echo Install Forge 1.12.2? (This is required to run the mods, if you already have it installed press 2)
 SET /P M=Type 1 for yes or 2 for no then press enter:
 IF %M%==1 GOTO forge
