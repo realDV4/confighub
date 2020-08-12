@@ -33,7 +33,7 @@ cls
 goto 2
 :optifine
 md %appdata%\.minecraft\mods\1.12.2
-bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/OptiFine_1.12.2_HD_U_F5.jar %appdata%\.minecraft\mods\1.12.2\Optifine.jar
+bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/OptiFine.jar %appdata%\.minecraft\mods\1.12.2\Optifine.jar
 goto mods
 :end
 @echo off
