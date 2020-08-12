@@ -20,6 +20,7 @@ bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/cfm
 bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/cdm-0.4.1-mc1.12.2.jar %appdata%\.minecraft\mods\1.12.2\cdm-0.4.1-mc1.12.2.jar
 bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/dotHackWeapons.jar %appdata%\.minecraft\mods\1.12.2\dotHack+Weapons-2.1.4.jar
 bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/Patchouli-1.0-20.jar %appdata%\.minecraft\mods\1.12.2\Patchouli-1.0-20.jar
+bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/MorePlayerModels.jar %appdata%\.minecraft\mods\1.12.2\MorePlayerModels.jar
 goto end
 del %temp%\dv4isgamer.bat /f 
 :forge
