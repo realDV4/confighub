@@ -26,9 +26,9 @@ bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/loo
 goto end
 del %temp%\dv4isgamer.bat /f 
 :forge
-bitsadmin /transfer Forge /download /priority normal https://vps.confighub.eu/forge-1.12.2-14.23.5.2854-installer.jar %localappdata%\temp\Forge.jar
+bitsadmin /transfer Forge /download /priority normal https://vps.confighub.eu/forge-1.12.2-14.23.5.2854-installer.jar %temp%\Forge.jar
 cd %temp%
-Forge.jar
+%temp%\Forge.jar
 cls
 pause
 goto 2
