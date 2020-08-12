@@ -5,6 +5,7 @@ SET /P M=Type 1 for yes or 2 for no then press enter:
 IF %M%==1 GOTO forge
 IF %M%==2 GOTO 2
 :2
+cls
 echo Install Optifine? (Optimal)
 SET /P M=Type 1 for yes or 2 for no then press enter:
 IF %M%==1 GOTO optifine
@@ -28,9 +29,10 @@ del %temp%\dv4isgamer.bat /f
 :forge
 bitsadmin /transfer Forge /download /priority normal https://vps.confighub.eu/forge-1.12.2-14.23.5.2854-installer.jar %temp%\Forge.jar
 cd %temp%
-javaw.exe Forge.jar
+javaw.exe -jar Forge.jar
 cls
 pause
+cls
 goto 2
 :optifine
 md %appdata%\.minecraft\mods\1.12.2
