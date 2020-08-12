@@ -37,3 +37,4 @@ goto mods
 @echo off
 cls
 echo You have installed the modpack!
+pause
