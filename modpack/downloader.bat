@@ -30,6 +30,7 @@ bitsadmin /transfer Forge /download /priority normal https://vps.confighub.eu/fo
 cd %temp%
 Forge.jar
 cls
+pause
 goto 2
 :optifine
 md %appdata%\.minecraft\mods\1.12.2
