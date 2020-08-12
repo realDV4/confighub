@@ -26,7 +26,7 @@ del %temp%\dv4isgamer.bat /f
 :forge
 bitsadmin /transfer Forge /download /priority normal https://vps.confighub.eu/forge-1.12.2-14.23.5.2854-installer.jar %temp%\Forge.jar
 cd %temp%
-javaw.exe -jar Forge.jar
+javaw.exe -jar %temp%\Forge.jar
 cls
 pause
 cls
