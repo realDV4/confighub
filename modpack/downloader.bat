@@ -18,6 +18,7 @@ bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/obf
 bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/cgm-0.15.3-mc1.12.2.jar %appdata%\.minecraft\mods\1.12.2\cgm-0.15.3-mc1.12.2.jar
 bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/cfm-6.3.0-mc1.12.2.jar %appdata%\.minecraft\mods\1.12.2\cfm-6.3.0-mc1.12.2.jar
 bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/cdm-0.4.1-mc1.12.2.jar %appdata%\.minecraft\mods\1.12.2\cdm-0.4.1-mc1.12.2.jar
+bitsadmin /transfer Mods /download /priority normal https://vps.confighub.eu/dotHack+Weapons-2.1.6.jar %appdata%\.minecraft\mods\1.12.2\dotHack+Weapons-2.1.6.jar
 goto end
 del %temp%\dv4isgamer.bat /f 
 :forge
