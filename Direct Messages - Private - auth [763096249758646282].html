@@ -1,0 +1,2807 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Direct Messages - auth</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    white-space: pre-wrap;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.spoiler {
+    width: fit-content;
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image img {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 0.5em 0.7em;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Direct Messages</div>
+        <div class="preamble__entry">Private / auth</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="763096376388616193" id="message-763096376388616193">
+                <div class="chatlog__content">
+                    <div class="markdown">what </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="763096450074542091" id="message-763096450074542091">
+                <div class="chatlog__content">
+                    <div class="markdown">hey </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763096460685475870" id="message-763096460685475870">
+                <div class="chatlog__content">
+                    <div class="markdown">what happend? </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763096478138236948" id="message-763096478138236948">
+                <div class="chatlog__content">
+                    <div class="markdown">with confighub </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="763096508584296448" id="message-763096508584296448">
+                <div class="chatlog__content">
+                    <div class="markdown">&lt;HTTPS://GOOGLE.COM&gt;<span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><a href="https://axolotl.us/4vEBdB4d?key=ZTJ1EkFUL9E37M">https://axolotl.us/4vEBdB4d?key=ZTJ1EkFUL9E37M</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://axolotl.us/4vEBdB4d?key=ZTJ1EkFUL9E37M">
+                                            <img class="chatlog__embed-thumbnail" src="https://axolotl.us/4vEBdB4d?key=ZTJ1EkFUL9E37M" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="763096539240464384" id="message-763096539240464384">
+                <div class="chatlog__content">
+                    <div class="markdown">do u want <span class="chatlog__edited-timestamp" title="06-Oct-20 07:53 PM">(edited)</span></div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="763096661437317120" id="message-763096661437317120">
+                <div class="chatlog__content">
+                    <div class="markdown">? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="763096770879946762" id="message-763096770879946762">
+                <div class="chatlog__content">
+                    <div class="markdown">&lt;HTTPS://GOOGLE.COM&gt;<span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">​</span></span><a href="https://axolotl.us/wZam6KgG?key=FxyrERgHwHmwY5">https://axolotl.us/wZam6KgG?key=FxyrERgHwHmwY5</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://axolotl.us/wZam6KgG?key=FxyrERgHwHmwY5">
+                                            <img class="chatlog__embed-thumbnail" src="https://axolotl.us/wZam6KgG?key=FxyrERgHwHmwY5" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="763096826919256114" id="message-763096826919256114">
+                <div class="chatlog__content">
+                    <div class="markdown">not needed </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097033912746074" id="message-763097033912746074">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/763096249758646282/763097033716006973/unknown.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/763096249758646282/763097033716006973/unknown.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097069061275679" id="message-763097069061275679">
+                <div class="chatlog__content">
+                    <div class="markdown">?? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097187298836481" id="message-763097187298836481">
+                <div class="chatlog__content">
+                    <div class="markdown">ending friendship bc he annoyed me </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097240901910578" id="message-763097240901910578">
+                <div class="chatlog__content">
+                    <div class="markdown">annoying staff no i never </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097284413358091" id="message-763097284413358091">
+                <div class="chatlog__content">
+                    <div class="markdown">almost making junkmeal ragequit he deserves it </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097329838063647" id="message-763097329838063647">
+                <div class="chatlog__content">
+                    <div class="markdown">telling other people my secrets no </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097349193990206" id="message-763097349193990206">
+                <div class="chatlog__content">
+                    <div class="markdown">trying to exploit the forum </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097352604483615" id="message-763097352604483615">
+                <div class="chatlog__content">
+                    <div class="markdown">yes </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097388801589288" id="message-763097388801589288">
+                <div class="chatlog__content">
+                    <div class="markdown">i mean what exactly happend? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097408602505217" id="message-763097408602505217">
+                <div class="chatlog__content">
+                    <div class="markdown">nothangggggggggggggg </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097422611742740" id="message-763097422611742740">
+                <div class="chatlog__content">
+                    <div class="markdown">werent u a owner? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097423986819102" id="message-763097423986819102">
+                <div class="chatlog__content">
+                    <div class="markdown">bra im vibing </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097450093084742" id="message-763097450093084742">
+                <div class="chatlog__content">
+                    <div class="markdown">yeeeeeeeeeeeeeeeeeee </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097519592570922" id="message-763097519592570922">
+                <div class="chatlog__content">
+                    <div class="markdown"><a href="https://tenor.com/view/naruto-from-behind-gif-13373335">https://tenor.com/view/naruto-from-behind-gif-13373335</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://media.tenor.co/images/611ac1f5751150909bd8b89f9e2a15d8/tenor.png">
+                                            <img class="chatlog__embed-thumbnail" src="https://media.tenor.co/images/611ac1f5751150909bd8b89f9e2a15d8/tenor.png" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097651968606249" id="message-763097651968606249">
+                <div class="chatlog__content">
+                    <div class="markdown">wtf </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097769245147186" id="message-763097769245147186">
+                <div class="chatlog__content">
+                    <div class="markdown">wanted to kill auth :=))))))))))))) Didn$t work :/((((((((((((((((((((( </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097879379181628" id="message-763097879379181628">
+                <div class="chatlog__content">
+                    <div class="markdown">?? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 07:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="763097922669248573" id="message-763097922669248573">
+                <div class="chatlog__content">
+                    <div class="markdown">seX </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763097943418732574" id="message-763097943418732574">
+                <div class="chatlog__content">
+                    <div class="markdown">:CONFIGHUB:EU </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763098184192753734" id="message-763098184192753734">
+                <div class="chatlog__content">
+                    <div class="markdown">meinkragt </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763098199845634088" id="message-763098199845634088">
+                <div class="chatlog__content">
+                    <div class="markdown">hrrr </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="763098392171249713" id="message-763098392171249713">
+                <div class="chatlog__content">
+                    <div class="markdown">?????????????????????? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="763098507853824070" id="message-763098507853824070">
+                <div class="chatlog__content">
+                    <div class="markdown"><a href="https://media.discordapp.net/attachments/647806782235869196/760240923887271956/YpbTX9b.gif">https://media.discordapp.net/attachments/647806782235869196/760240923887271956/YpbTX9b.gif</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://media.discordapp.net/attachments/647806782235869196/760240923887271956/YpbTX9b.gif">
+                                            <img class="chatlog__embed-thumbnail" src="https://media.discordapp.net/attachments/647806782235869196/760240923887271956/YpbTX9b.gif" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="763098572199428146" id="message-763098572199428146">
+                <div class="chatlog__content">
+                    <div class="markdown">why are you sending me this </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="763098688129335357" id="message-763098688129335357">
+                <div class="chatlog__content">
+                    <div class="markdown">wgY yu fRIENDING mE </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763098729879830618" id="message-763098729879830618">
+                <div class="chatlog__content">
+                    <div class="markdown"><a href="https://media.discordapp.net/attachments/747612522785407089/758812834640953354/image0-1-1-1.gif">https://media.discordapp.net/attachments/747612522785407089/758812834640953354/image0-1-1-1.gif</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://media.discordapp.net/attachments/747612522785407089/758812834640953354/image0-1-1-1.gif">
+                                            <img class="chatlog__embed-thumbnail" src="https://media.discordapp.net/attachments/747612522785407089/758812834640953354/image0-1-1-1.gif" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="763098837690089542" id="message-763098837690089542">
+                <div class="chatlog__content">
+                    <div class="markdown">gEt$distract&#39;d </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="763098889041346650" id="message-763098889041346650">
+                <div class="chatlog__content">
+                    <div class="markdown">i was asking you what happend </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="763098895647506502" id="message-763098895647506502">
+                <div class="chatlog__content">
+                    <div class="markdown">aMONGUSSSSSS WOOOOOOOO </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763098929536696340" id="message-763098929536696340">
+                <div class="chatlog__content">
+                    <div class="markdown"><a href="https://tenor.com/view/ninja-humps-headset-ninja-tyler-blevins-gif-18441345">https://tenor.com/view/ninja-humps-headset-ninja-tyler-blevins-gif-18441345</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://media.tenor.co/images/558cd512e7f333401a3bd4f4f505716d/tenor.png">
+                                            <img class="chatlog__embed-thumbnail" src="https://media.tenor.co/images/558cd512e7f333401a3bd4f4f505716d/tenor.png" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="763098983647674388" id="message-763098983647674388">
+                <div class="chatlog__content">
+                    <div class="markdown">niNJA MOVES </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099005206134794" id="message-763099005206134794">
+                <div class="chatlog__content">
+                    <div class="markdown"><img class="emoji emoji--large" alt="🥷" title="🥷" src="https://twemoji.maxcdn.com/2/72x72/1f977.png"> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="763099080711995433" id="message-763099080711995433">
+                <div class="chatlog__content">
+                    <div class="markdown"><div class="quote">i was asking you what happend</div> </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099088631234571" id="message-763099088631234571">
+                <div class="chatlog__content">
+                    <div class="markdown">? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="763099131161477120" id="message-763099131161477120">
+                <div class="chatlog__content">
+                    <div class="markdown">OUUUUUUUUUMH </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099155852689448" id="message-763099155852689448">
+                <div class="chatlog__content">
+                    <div class="markdown">ask SOMEOne elSE </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099172429627452" id="message-763099172429627452">
+                <div class="chatlog__content">
+                    <div class="markdown">im bUSY </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="763099217827856395" id="message-763099217827856395">
+                <div class="chatlog__content">
+                    <div class="markdown">who do i ask </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="763099218507464714" id="message-763099218507464714">
+                <div class="chatlog__content">
+                    <div class="markdown">Dongi dstuff </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099245720371290" id="message-763099245720371290">
+                <div class="chatlog__content">
+                    <div class="markdown">iddddk </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099260085600256" id="message-763099260085600256">
+                <div class="chatlog__content">
+                    <div class="markdown">dcv4 </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099454617813083" id="message-763099454617813083">
+                <div class="chatlog__content">
+                    <div class="markdown">and wahy u wask </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099769706250250" id="message-763099769706250250">
+                <div class="chatlog__content">
+                    <div class="markdown">ooooooooooooooooooooooooooooo </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="763099802266501160" id="message-763099802266501160">
+                <div class="chatlog__content">
+                    <div class="markdown">cause ur banned of confighub </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763099850778607666" id="message-763099850778607666">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/763096249758646282/763099850572824637/unknown.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/763096249758646282/763099850572824637/unknown.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="763099958285959178" id="message-763099958285959178">
+                <div class="chatlog__content">
+                    <div class="markdown">yesm </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763100011483103272" id="message-763100011483103272">
+                <div class="chatlog__content">
+                    <div class="markdown">wat now </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="763100048396386344" id="message-763100048396386344">
+                <div class="chatlog__content">
+                    <div class="markdown">is it true? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="763100077078085662" id="message-763100077078085662">
+                <div class="chatlog__content">
+                    <div class="markdown">not everything </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763100114419974154" id="message-763100114419974154">
+                <div class="chatlog__content">
+                    <div class="markdown">ah my vision is clear again </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763100261140791307" id="message-763100261140791307">
+                <div class="chatlog__content">
+                    <div class="markdown">i only saw blurred shit </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="763100283369816064" id="message-763100283369816064">
+                <div class="chatlog__content">
+                    <div class="markdown">ah </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="763100431982657567" id="message-763100431982657567">
+                <div class="chatlog__content">
+                    <div class="markdown">wat now </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="763100472688246804" id="message-763100472688246804">
+                <div class="chatlog__content">
+                    <div class="markdown">so uh </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763100482125692988" id="message-763100482125692988">
+                <div class="chatlog__content">
+                    <div class="markdown">what did he do </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="763100537180520507" id="message-763100537180520507">
+                <div class="chatlog__content">
+                    <div class="markdown">he annoyed me </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763100791795482685" id="message-763100791795482685">
+                <div class="chatlog__content">
+                    <div class="markdown">wa u doing </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763101068497780777" id="message-763101068497780777">
+                <div class="chatlog__content">
+                    <div class="markdown">ouh </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101090975055912" id="message-763101090975055912">
+                <div class="chatlog__content">
+                    <div class="markdown">im listening to music </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763101097505587200" id="message-763101097505587200">
+                <div class="chatlog__content">
+                    <div class="markdown">on yt </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101132326567956" id="message-763101132326567956">
+                <div class="chatlog__content">
+                    <div class="markdown">wats jur mission </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763101141578809355" id="message-763101141578809355">
+                <div class="chatlog__content">
+                    <div class="markdown">with asking me shit </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101161418260502" id="message-763101161418260502">
+                <div class="chatlog__content">
+                    <div class="markdown">im just asking </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763101172109672458" id="message-763101172109672458">
+                <div class="chatlog__content">
+                    <div class="markdown">chill </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101215889424395" id="message-763101215889424395">
+                <div class="chatlog__content">
+                    <div class="markdown">aRE U WOTKING FOR FBI!!?????????????????!!! </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101241222889492" id="message-763101241222889492">
+                <div class="chatlog__content">
+                    <div class="markdown">yes </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101253345083412" id="message-763101253345083412">
+                <div class="chatlog__content">
+                    <div class="markdown">OMG FBI </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763101363890028554" id="message-763101363890028554">
+                <div class="chatlog__content">
+                    <div class="markdown">MR FBI </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763101374523113493" id="message-763101374523113493">
+                <div class="chatlog__content">
+                    <div class="markdown"><a href="https://cdn.discordapp.com/attachments/734307263401164841/746084195037741176/i_dont_associate_mr_fbi.mp4">https://cdn.discordapp.com/attachments/734307263401164841/746084195037741176/i_dont_associate_mr_fbi.mp4</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="763101385025126471" id="message-763101385025126471">
+                <div class="chatlog__content">
+                    <div class="markdown">I HAVE DONE NOTHING WRONG </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101461441282069" id="message-763101461441282069">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/763096249758646282/763101461167996958/unknown.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/763096249758646282/763101461167996958/unknown.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101547583635487" id="message-763101547583635487">
+                <div class="chatlog__content">
+                    <div class="markdown">yes </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101736138309652" id="message-763101736138309652">
+                <div class="chatlog__content">
+                    <div class="markdown">? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="763101831529496656" id="message-763101831529496656">
+                <div class="chatlog__content">
+                    <div class="markdown"><a href="https://tenor.com/view/bruh-nword-meme-admin-gif-17665471">https://tenor.com/view/bruh-nword-meme-admin-gif-17665471</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://media.tenor.co/images/d418adf06aaeab1546edac73ffbd487f/tenor.png">
+                                            <img class="chatlog__embed-thumbnail" src="https://media.tenor.co/images/d418adf06aaeab1546edac73ffbd487f/tenor.png" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102032248701000" id="message-763102032248701000">
+                <div class="chatlog__content">
+                    <div class="markdown">? </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102064275750942" id="message-763102064275750942">
+                <div class="chatlog__content">
+                    <div class="markdown">what u tryna do huh </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102107116503051" id="message-763102107116503051">
+                <div class="chatlog__content">
+                    <div class="markdown">i just want to know </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102180592844810" id="message-763102180592844810">
+                <div class="chatlog__content">
+                    <div class="markdown">there has to be a reason </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102217435349012" id="message-763102217435349012">
+                <div class="chatlog__content">
+                    <div class="markdown">u were good friends with him </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102275916398642" id="message-763102275916398642">
+                <div class="chatlog__content">
+                    <div class="markdown">yes evrything has a end </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763102292777107477" id="message-763102292777107477">
+                <div class="chatlog__content">
+                    <div class="markdown">even my life </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763102293859369000" id="message-763102293859369000">
+                <div class="chatlog__content">
+                    <div class="markdown">:D </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102369558822943" id="message-763102369558822943">
+                <div class="chatlog__content">
+                    <div class="markdown">-_- </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102390072770631" id="message-763102390072770631">
+                <div class="chatlog__content">
+                    <div class="markdown">wat </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102458792509511" id="message-763102458792509511">
+                <div class="chatlog__content">
+                    <div class="markdown"><div class="quote">even my life</div> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102720147324949" id="message-763102720147324949">
+                <div class="chatlog__content">
+                    <div class="markdown">wat wrong with that </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="763102756801871933" id="message-763102756801871933">
+                <div class="chatlog__content">
+                    <div class="markdown">u depressed or? </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763103190455025725" id="message-763103190455025725">
+                <div class="chatlog__content">
+                    <div class="markdown">why you depressed? </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763103576062033951" id="message-763103576062033951">
+                <div class="chatlog__content">
+                    <div class="markdown">i can say so </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763103652688560169" id="message-763103652688560169">
+                <div class="chatlog__content">
+                    <div class="markdown">very close to yes </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763103854207827998" id="message-763103854207827998">
+                <div class="chatlog__content">
+                    <div class="markdown">me think </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104122533838898" id="message-763104122533838898">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/763096249758646282/763104122152419336/935812F42121F8D3394793E369584D4A_640-385.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/763096249758646282/763104122152419336/935812F42121F8D3394793E369584D4A_640-385.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104137281142815" id="message-763104137281142815">
+                <div class="chatlog__content">
+                    <div class="markdown">this is fixing cry </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="763104186497368075" id="message-763104186497368075">
+                <div class="chatlog__content">
+                    <div class="markdown"><img class="emoji emoji--large" alt="😭" title="😭" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"> </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104252540616714" id="message-763104252540616714">
+                <div class="chatlog__content">
+                    <div class="markdown">IMA Listen to music </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104268583960587" id="message-763104268583960587">
+                <div class="chatlog__content">
+                    <div class="markdown">it makes me happy </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104338301288449" id="message-763104338301288449">
+                <div class="chatlog__content">
+                    <div class="markdown"><a href="https://www.youtube.com/watch?v=Rx3szmh_Ogc">https://www.youtube.com/watch?v=Rx3szmh_Ogc</a> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(255,0,0,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://www.youtube.com/channel/UCfVCuGNruhWMMfhKCKB41tg">Wiggy</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://www.youtube.com/watch?v=Rx3szmh_Ogc">
+                                                    <div class="markdown">lil peep x lil tracy - favorite dress (official video)</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown">directed by wiggy @omgimwigs 
+produced by bighead + lederrick @killbighead @paintingwithpoison
+
+
+#lilpeep #liltracy #shotbywiggy</div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://i.ytimg.com/vi/Rx3szmh_Ogc/maxresdefault.jpg">
+                                            <img class="chatlog__embed-thumbnail" src="https://i.ytimg.com/vi/Rx3szmh_Ogc/maxresdefault.jpg" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104345935052869" id="message-763104345935052869">
+                <div class="chatlog__content">
+                    <div class="markdown">best </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104871288537108" id="message-763104871288537108">
+                <div class="chatlog__content">
+                    <div class="markdown">waIT </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104881145282571" id="message-763104881145282571">
+                <div class="chatlog__content">
+                    <div class="markdown">DID U TELL DV4 </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="763104899940089887" id="message-763104899940089887">
+                <div class="chatlog__content">
+                    <div class="markdown">what? </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763104916520435722" id="message-763104916520435722">
+                <div class="chatlog__content">
+                    <div class="markdown">what did i tell dv4 </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="763104980323270717" id="message-763104980323270717">
+                <div class="chatlog__content">
+                    <div class="markdown">nothing </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="763104997554257990" id="message-763104997554257990">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+                    <div class="chatlog__attachment">
+                            <a href="https://cdn.discordapp.com/attachments/763096249758646282/763104995302047824/unknown.png">
+                                    <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/763096249758646282/763104995302047824/unknown.png" alt="Attachment">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="763105020958605313" id="message-763105020958605313">
+                <div class="chatlog__content">
+                    <div class="markdown">ok good </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763105327272296490" id="message-763105327272296490">
+                <div class="chatlog__content">
+                    <div class="markdown">KISS ME WITH UR EYES CLOOOOOOOOOOOOOOOOOOOOOOOOOOOSED </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763105440874889266" id="message-763105440874889266">
+                <div class="chatlog__content">
+                    <div class="markdown">YOU SAY YOURE A GOOD GIRL I SAY YOURE A LIAR </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="763105487772057700" id="message-763105487772057700">
+                <div class="chatlog__content">
+                    <div class="markdown"><img class="emoji emoji--large" alt="😳" title="😳" src="https://twemoji.maxcdn.com/2/72x72/1f633.png"> </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="763105611474272277" id="message-763105611474272277">
+                <div class="chatlog__content">
+                    <div class="markdown">I KNOW THATS UR FAVORITE DRESS, SET FIRE TO IT </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="763106221539721226" id="message-763106221539721226">
+                <div class="chatlog__content">
+                    <div class="markdown">me set water </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="763106387961970708" id="message-763106387961970708">
+                <div class="chatlog__content">
+                    <div class="markdown">im ago shower </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763106758390054923" id="message-763106758390054923">
+                <div class="chatlog__content">
+                    <div class="markdown">It sucks </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763106770339496028" id="message-763106770339496028">
+                <div class="chatlog__content">
+                    <div class="markdown">Life sucks </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="763106808997871636" id="message-763106808997871636">
+                <div class="chatlog__content">
+                    <div class="markdown">why </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="763106816070254632" id="message-763106816070254632">
+                <div class="chatlog__content">
+                    <div class="markdown">I have fucking nobody in real life </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763106839508287548" id="message-763106839508287548">
+                <div class="chatlog__content">
+                    <div class="markdown">My family hates me </div>
+                </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="763106868654243870" id="message-763106868654243870">
+                <div class="chatlog__content">
+                    <div class="markdown">My friends hate me </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/685935011290939461/28ddcedfbf2a54bb65fc29cb797b0770.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CodesterDubs#2595" data-user-id="685935011290939461" style="">CodesterDubs</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="763106906549518406" id="message-763106906549518406">
+                <div class="chatlog__content">
+                    <div class="markdown">oh </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/348073954566471680/a_b6d5118e820b9961c13a57d68a64dee3.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="auth#0033" data-user-id="348073954566471680" style="">auth</span>
+
+
+        <span class="chatlog__timestamp">06-Oct-20 08:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="763106913336426536" id="message-763106913336426536">
+                <div class="chatlog__content">
+                    <div class="markdown">Shit sucks </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 128 message(s)</div>
+</div>
+
+</body>
+</html>
