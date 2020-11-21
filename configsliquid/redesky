@@ -156,7 +156,7 @@ ChestAura ThroughWalls true
 ChestAura VisualSwing false
 ChestAura Chest 54
 ChestAura Rotations false
-ChestAura toggle true
+ChestAura toggle false
 ChestStealer MaxDelay 30
 ChestStealer MinDelay 30
 ChestStealer TakeRandomized true
