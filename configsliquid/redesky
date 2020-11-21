@@ -167,7 +167,7 @@ ChestStealer AutoCloseMaxDelay 126
 ChestStealer AutoCloseMinDelay 56
 ChestStealer CloseOnFull true
 ChestStealer ChestTitle false
-ChestStealer toggle true
+ChestStealer toggle false
 CivBreak Range 5.0
 CivBreak Rotations false
 CivBreak VisualSwing true
