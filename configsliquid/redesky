@@ -1,3 +1,33 @@
+AACClickTP Block 26
+AACClickTP InstantBlockFucker false
+AACClickTP FuckerRotate false
+AACClickTP Swing true
+AACClickTP Mode AAC3New
+AACClickTP DelayMode Static
+AACClickTP CustomDelay 2000.0
+AACClickTP WaitTicks 30
+AACClickTP StayAtTarget true
+AACClickTP MaxStayTicks 45
+AACClickTP UseNoXZMoveTimer true
+AACClickTP NoXZMoveTimer 0.4
+AACClickTP Button Middle
+AACClickTP TargetESP true
+AACClickTP R 10
+AACClickTP G 10
+AACClickTP B 10
+AACClickTP toggle false
+AACPhase toggle false
+AACStep toggle false
+AACTP FlySpeed 3.0
+AACTP Block 26
+AACTP InstantBlockFucker true
+AACTP FuckerRotate false
+AACTP Swing true
+AACTP Mode AAC
+AACTP DisableOnDmg true
+AACTP AroundWalls false
+AACTP toggle false
+AIRLadder toggle false
 AbortBreaking toggle false
 Aimbot Range 100.0
 Aimbot TurnSpeed 2.0
@@ -10,14 +40,34 @@ Aimbot toggle false
 AirJump toggle false
 AirLadder toggle false
 AntiAFK toggle false
+AntiBot Tab false
+AntiBot TabMode Contains
+AntiBot EntityID false
+AntiBot Color false
+AntiBot LivingTime false
+AntiBot LivingTimeTicks 200
+AntiBot Ground false
+AntiBot Air false
+AntiBot InvalidGround false
+AntiBot Swing false
+AntiBot Health false
+AntiBot Derp false
+AntiBot WasInvisible false
+AntiBot Armor false
+AntiBot Ping false
+AntiBot NeedHit false
+AntiBot DuplicateInWorld false
+AntiBot DuplicateInTab false
+AntiBot toggle true
 AntiCactus toggle true
+AntiFireball toggle false
 AntiHunger toggle false
 AtAllProvider MaxDelay 1000
 AtAllProvider MinDelay 500
 AtAllProvider Retry false
 AtAllProvider toggle false
-AutoArmor MaxDelay 10
-AutoArmor MinDelay 10
+AutoArmor MaxDelay 0
+AutoArmor MinDelay 0
 AutoArmor InvOpen false
 AutoArmor SimulateInventory false
 AutoArmor NoMove false
@@ -33,6 +83,7 @@ AutoClicker Right true
 AutoClicker Left true
 AutoClicker Jitter false
 AutoClicker toggle false
+AutoFindBlock toggle false
 AutoFish toggle false
 AutoLeave Health 8.0
 AutoLeave Mode Quit
@@ -105,7 +156,7 @@ ChestAura ThroughWalls true
 ChestAura VisualSwing false
 ChestAura Chest 54
 ChestAura Rotations false
-ChestAura toggle false
+ChestAura toggle true
 ChestStealer MaxDelay 0
 ChestStealer MinDelay 0
 ChestStealer TakeRandomized true
@@ -115,8 +166,8 @@ ChestStealer AutoClose true
 ChestStealer AutoCloseMaxDelay 126
 ChestStealer AutoCloseMinDelay 56
 ChestStealer CloseOnFull true
-ChestStealer ChestTitle true
-ChestStealer toggle false
+ChestStealer ChestTitle false
+ChestStealer toggle true
 CivBreak Range 5.0
 CivBreak Rotations false
 CivBreak VisualSwing true
@@ -134,6 +185,7 @@ ConsoleSpammer toggle false
 Criticals Mode Jump
 Criticals Delay 0
 Criticals HurtTime 10
+Criticals toggle false
 Damage Mode NCP
 Damage Damage 6
 Damage toggle false
@@ -233,16 +285,16 @@ KeepAlive toggle false
 KeepContainer toggle false
 Kick Mode Quit
 Kick toggle false
-KillAura MaxCPS 17
-KillAura MinCPS 10
-KillAura HurtTime 7
-KillAura Range 4.94
+KillAura MaxCPS 20
+KillAura MinCPS 20
+KillAura HurtTime 10
+KillAura Range 5.0
 KillAura ThroughWallsRange 0.0
 KillAura RangeSprintReducement 0.0
 KillAura Priority Direction
-KillAura TargetMode Switch
+KillAura TargetMode Single
 KillAura Swing true
-KillAura KeepSprint true
+KillAura KeepSprint false
 KillAura AutoBlock false
 KillAura InteractAutoBlock false
 KillAura DelayedBlock false
@@ -251,18 +303,18 @@ KillAura RayCast true
 KillAura RayCastIgnored true
 KillAura LivingRayCast true
 KillAura AAC true
-KillAura MaxTurnSpeed 30.0
-KillAura MinTurnSpeed 20.0
+KillAura MaxTurnSpeed 46.61
+KillAura MinTurnSpeed 46.61
 KillAura SilentRotation true
 KillAura Strafe Silent
 KillAura RandomCenter false
 KillAura Outborder false
 KillAura FOV 180.0
 KillAura Predict true
-KillAura MaxPredictSize 1.5
-KillAura MinPredictSize 1.0
-KillAura FailRate 3.0
-KillAura FakeSwing true
+KillAura MaxPredictSize 5.0
+KillAura MinPredictSize 5.0
+KillAura FailRate 0.0
+KillAura FakeSwing false
 KillAura NoInvAttack false
 KillAura NoInvDelay 0
 KillAura LimitedMultiTargets 0
@@ -281,6 +333,13 @@ LongJump Mode AACv1
 LongJump NCPBoost 3.33
 LongJump AutoJump true
 LongJump toggle false
+MatrixGlide HorizontalSpeedMultiplier 0.73
+MatrixGlide AutoDisable false
+MatrixGlide Timer 1.0
+MatrixGlide Ticks 2
+MatrixGlide OnGround false
+MatrixGlide toggle false
+MatrixOmnisprint toggle false
 MidClick toggle true
 MoreCarry toggle false
 MultiActions toggle false
@@ -303,7 +362,7 @@ NoSlow BowForwardMultiplier 0.45
 NoSlow BowStrafeMultiplier 0.45
 NoSlow Packet false
 NoSlow Soulsand false
-NoSlow toggle true
+NoSlow toggle false
 NoSlowBreak Air true
 NoSlowBreak Water false
 NoSlowBreak toggle false
@@ -363,26 +422,36 @@ Scaffold Sprint false
 Scaffold Swing true
 Scaffold Search true
 Scaffold Down false
-Scaffold PlaceTiming Pre
-Scaffold Eagle true
+Scaffold PlaceTiming Post
+Scaffold Eagle false
 Scaffold EagleSilent false
 Scaffold BlocksToEagle 0
 Scaffold ExpandLength 3
-Scaffold Rotations true
+Scaffold Rotations false
 Scaffold KeepRotationLength 0
 Scaffold KeepRotation true
 Scaffold Zitter false
 Scaffold ZitterMode Teleport
 Scaffold ZitterSpeed 0.13
 Scaffold ZitterStrength 0.05
-Scaffold Timer 0.65
-Scaffold SpeedModifier 0.0
+Scaffold Timer 1.0
+Scaffold SpeedModifier 1.0
 Scaffold SameY false
 Scaffold SafeWalk true
-Scaffold AirSafe true
+Scaffold AirSafe false
 Scaffold Counter true
 Scaffold Mark false
 Scaffold toggle false
+Scaffold4K Mode AAC4
+Scaffold4K BuildTowerSpeed Normal
+Scaffold4K AutoScaffoldSettings true
+Scaffold4K HiveSpeed false
+Scaffold4K AutoFreecam false
+Scaffold4K Afterfall true
+Scaffold4K Fallprotect true
+Scaffold4K WebSpeed Intave
+Scaffold4K toggle false
+ScaffoldFix toggle false
 ServerCrasher Mode Book
 ServerCrasher toggle false
 SkinDerp Delay 0
@@ -399,7 +468,7 @@ SlimeJump toggle false
 Sneak Mode Legit
 Sneak StopMove false
 Sneak toggle false
-Speed Mode Custom
+Speed Mode SlowHop
 Speed CustomSpeed 0.39
 Speed CustomY 0.4
 Speed CustomTimer 1.0
@@ -425,10 +494,28 @@ Step toggle false
 Strafe toggle false
 SuperKnockback HurtTime 10
 SuperKnockback toggle false
+SuperVelocity toggle false
 TNTBlock Fuse 3
 TNTBlock Range 9.0
 TNTBlock AutoSword true
 TNTBlock toggle false
+TPHit Mode AAC3New
+TPHit DelayMode Dynamic
+TPHit CustomDelay 500.0
+TPHit WaitTicks 10
+TPHit UseNoXZMoveTimer false
+TPHit NoXZMoveTimer 0.6
+TPHit AntiKick false
+TPHit ShowTargetHUD false
+TPHit X 405
+TPHit Y 330
+TPHit Scale 1.0
+TPHit BGAlpha 150
+TPHit ShadowText true
+TPHit FontNumber 0
+TPHit Selected font Roboto Medium
+TPHit toggle false
+TPScriptInfo toggle false
 Teams ScoreboardTeam false
 Teams Color true
 Teams GommeSW false
@@ -465,8 +552,8 @@ Trigger MaxCPS 12
 Trigger MinCPS 8
 Trigger toggle false
 VehicleOneHit toggle false
-Velocity Horizontal 0.44
-Velocity Vertical 0.91
+Velocity Horizontal 0.45
+Velocity Vertical 1.0
 Velocity Mode Simple
 Velocity ReverseStrength 1.0
 Velocity SmoothReverseStrength 0.02
@@ -498,9 +585,9 @@ unchat &r
 unchat &r
 unchat &r
 unchat &f-------[&eChangelog&f]-------
-unchat &bUpdate to AAC V4
+unchat &bImproved Killaura and some other stuff
 unchat &f------------------------------
 unchat &3Status:&a Bypassing (But Beta)
-unchat &3Theres no Speed and (Good,flagfree) Scaffold
+unchat &3Theres no Speed, Use Scaffold4k from CCBlueX Forums for scaffold.
 unchat &3Longjump Bypasses but not too long
-unchat &bThis config is not fully done yet, please report any problem to me (DV4#8261).
+unchat &bThis config is not fully done yet.
