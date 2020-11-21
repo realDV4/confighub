@@ -157,8 +157,8 @@ ChestAura VisualSwing false
 ChestAura Chest 54
 ChestAura Rotations false
 ChestAura toggle true
-ChestStealer MaxDelay 0
-ChestStealer MinDelay 0
+ChestStealer MaxDelay 30
+ChestStealer MinDelay 30
 ChestStealer TakeRandomized true
 ChestStealer OnlyItems false
 ChestStealer NoCompass false
@@ -252,8 +252,8 @@ IceSpeed toggle false
 Ignite Lighter true
 Ignite Lava true
 Ignite toggle false
-InventoryCleaner MaxDelay 0
-InventoryCleaner MinDelay 0
+InventoryCleaner MaxDelay 30
+InventoryCleaner MinDelay 30
 InventoryCleaner InvOpen false
 InventoryCleaner SimulateInventory false
 InventoryCleaner NoMove false
@@ -586,6 +586,7 @@ unchat &r
 unchat &r
 unchat &f-------[&eChangelog&f]-------
 unchat &bImproved Killaura and some other stuff
+unchat &bMade Delay for InventoryCleaner&b, Cheststealer higher &bto prevent glitches
 unchat &f------------------------------
 unchat &3Status:&a Bypassing (But Beta)
 unchat &3Theres no Speed, Use Scaffold4k from CCBlueX Forums for scaffold.
