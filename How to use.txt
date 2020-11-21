@@ -1,3 +1,0 @@
-1. Put one of those Files (configs) into Minecraft Folder (Default is %appdata%/.minecraft) -> Liquidbounce1.8 -> settings
-2. If you started your game just type .localconfig load (Filename) into chat
-3. Done
