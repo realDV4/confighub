@@ -27,7 +27,7 @@
 	--font:							Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;		/* font used in most places														*/
 	--textshadow:					transparent;				/* default: transparent			(textshadow for text ontop of accentcolor nodes, ONLY accepts a color, no px)	*/
 	
-	--background:					url(https://host.confighub.eu/files/292adb416146104dcce7936e466fb780.gif);	/* general background image						*/
+	--background:					url(https://host.confighub.eu/files/4c30242a04e44ef719098326b62913b9.gif);	/* general background image						*/
 	--backgroundsize:				cover;						/* default: cover				(sizefit of general background - values: [cover/contain/auto])					*/
 	--backgroundblur:				unset;						/* default: 0px					(only works when --background is set to an image)								*/
 	
