@@ -479,7 +479,7 @@ Scaffold4K Afterfall true
 Scaffold4K Fallprotect true
 Scaffold4K WebSpeed Intave
 Scaffold4K toggle false
-ScaffoldFix toggle false
+ScaffoldFix toggle true
 ServerCrasher Mode Book
 ServerCrasher toggle false
 SkinDerp Delay 0
