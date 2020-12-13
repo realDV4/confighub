@@ -136,7 +136,7 @@ BetterCriticals PacketTimerDelay 0
 BetterCriticals PacketTimer 1.0
 BetterCriticals PacketHopPacketHeight 0.15
 BetterCriticals PacketHopFirstMotion 0.149
-BetterCriticals toggle true
+BetterCriticals toggle false
 Blink Pulse false
 Blink PulseDelay 400
 Blink toggle false
